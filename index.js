@@ -1,4 +1,4 @@
-// Add or update element when button is clicked
+// Add or update element
 function addOrUpdateElement() {
   const container = document.getElementById("dynamic-content");
   let el = document.getElementById("added-element");
@@ -13,18 +13,17 @@ function addOrUpdateElement() {
   }
 }
 
-// Remove the added element
+// Remove element
 function removeElement() {
   const el = document.getElementById("added-element");
   if (el) el.remove();
 }
 
-// Handle form submission
+// Form submission
 function submitForm() {
   const input = document.getElementById("user-input");
   const container = document.getElementById("dynamic-content");
   const errorMessage = document.getElementById("error-message");
-
   const value = input.value.trim();
 
   if (!value) {
@@ -38,7 +37,7 @@ function submitForm() {
   input.value = "";
 }
 
-// Attach event listeners after DOM loads
+// Attach event listeners
 document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("simulate-click")
@@ -49,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     submitForm();
   });
 
-  // Expose functions globally for auto-grader
+  // Expose functions for auto-grader
   window.addElement = addOrUpdateElement;
   window.removeElement = removeElement;
   window.submitForm = submitForm;
