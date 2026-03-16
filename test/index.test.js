@@ -1,42 +1,47 @@
 /**
  * @jest-environment jsdom
  */
-
 /* eslint-env node, jest */
-/* eslint-disable no-undef */
 
 const fs = require("fs");
 const path = require("path");
 
-// Load HTML template
+// Load HTML
 const html = fs.readFileSync(path.resolve(__dirname, "../index.html"), "utf8");
 
 beforeEach(() => {
   document.body.innerHTML = html;
-  jest.resetModules(); // Reload JS module for fresh DOM
-  require("../index.js"); // Load frontend JS
+  jest.resetModules();
+  require("../index.js");
 });
 
-test("simulate-click button updates dynamic content", () => {
-  const button = document.querySelector("#simulate-click");
-  const dynamicContent = document.querySelector("#dynamic-content");
-
-  button.click();
-
-  expect(dynamicContent.textContent).toBe("Button was clicked!");
+test("Add element to the DOM", () => {
+  const addButton = document.querySelector("#simulate-click");
+  addButton.click();
+  const addedEl = document.querySelector("#added-element");
+  expect(addedEl).not.toBeNull();
+  expect(addedEl.textContent).toBe("New element added!");
 });
 
-test("form submission with empty input shows error", () => {
-  const form = document.querySelector("#user-form");
-  const errorMessage = document.querySelector("#error-message");
-
-  form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
-
-  expect(errorMessage.textContent).toBe("Input cannot be empty");
-  expect(errorMessage.classList.contains("hidden")).toBe(false);
+test("Remove an element from the DOM", () => {
+  const addButton = document.querySelector("#simulate-click");
+  const removeButton = document.querySelector("#remove-button");
+  addButton.click();
+  expect(document.querySelector("#added-element")).not.toBeNull();
+  removeButton.click();
+  expect(document.querySelector("#added-element")).toBeNull();
 });
 
-test("form submission with input updates dynamic content", () => {
+test("Update the DOM", () => {
+  const addButton = document.querySelector("#simulate-click");
+  const updateButton = document.querySelector("#update-button");
+  addButton.click();
+  updateButton.click();
+  const addedEl = document.querySelector("#added-element");
+  expect(addedEl.textContent).toBe("Content updated!");
+});
+
+test("Form submission with input updates dynamic content", () => {
   const form = document.querySelector("#user-form");
   const input = document.querySelector("#user-input");
   const dynamicContent = document.querySelector("#dynamic-content");
@@ -47,4 +52,16 @@ test("form submission with input updates dynamic content", () => {
 
   expect(dynamicContent.textContent).toBe("You submitted: Hello Jest");
   expect(errorMessage.classList.contains("hidden")).toBe(true);
+});
+
+test("Display error message on empty input submission", () => {
+  const form = document.querySelector("#user-form");
+  const input = document.querySelector("#user-input");
+  const errorMessage = document.querySelector("#error-message");
+
+  input.value = "";
+  form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+
+  expect(errorMessage.textContent).toBe("Input cannot be empty");
+  expect(errorMessage.classList.contains("hidden")).toBe(false);
 });

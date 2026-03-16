@@ -1,20 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DOM Testing Lab</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <h1>DOM Testing and User Behavior Simulation</h1>
-  <button id="simulate-click">Simulate Click</button>
-  <form id="user-form">
-    <input type="text" id="user-input" placeholder="Enter text">
-    <button type="submit">Submit</button>
-  </form>
-  <div id="dynamic-content"></div>
-  <div id="error-message" class="hidden"></div>
-  <script src="../index.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Testing Lab</title>
+  </head>
+  <body>
+    <h1>DOM Testing and User Behavior Simulation</h1>
+
+    <!-- Add element button -->
+    <button id="simulate-click">Add Element</button>
+
+    <!-- Remove and Update buttons -->
+    <div id="controls">
+      <button id="remove-button">Remove last element</button>
+      <button id="update-button">Update content</button>
+    </div>
+
+    <!-- Dynamic content -->
+    <div id="dynamic-content"></div>
+
+    <!-- Form for input submission -->
+    <form id="user-form">
+      <input type="text" id="user-input" placeholder="Enter text" />
+      <button type="submit">Submit</button>
+    </form>
+
+    <!-- Error message -->
+    <div id="error-message" class="hidden"></div>
+
+    <script src="index.js"></script>
+  </body>
 </html>
