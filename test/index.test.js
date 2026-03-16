@@ -5,16 +5,16 @@
 const fs = require("fs");
 const path = require("path");
 
-// Load the HTML file
+// Load HTML into jsdom
 const html = fs.readFileSync(path.resolve(__dirname, "../index.html"), "utf-8");
 
 beforeAll(() => {
   document.body.innerHTML = html;
 
-  // Load and run the script once
+  // Load the main script
   require("../index.js");
 
-  // Fire DOMContentLoaded so listeners attach
+  // Fire DOMContentLoaded so event listeners attach
   document.dispatchEvent(new Event("DOMContentLoaded"));
 });
 
@@ -33,17 +33,18 @@ describe("Simulate Click Button", () => {
 
     expect(dynamicContent.children.length).toBe(0);
 
-    button.click();
+    button.click(); // first click adds element
 
     const addedEl = document.getElementById("added-element");
     expect(addedEl).not.toBeNull();
     expect(addedEl.textContent).toBe("Button was clicked!");
   });
 
-  test("updates the element correctly", () => {
-    // Call functions directly via window
-    window.addElement();
-    window.updateElement();
+  test("updates the element text when clicked a second time", () => {
+    const button = document.getElementById("simulate-click");
+
+    button.click(); // first click adds element
+    button.click(); // second click updates element
 
     const addedEl = document.getElementById("added-element");
     expect(addedEl).not.toBeNull();
@@ -51,8 +52,8 @@ describe("Simulate Click Button", () => {
   });
 
   test("removes the element correctly", () => {
-    window.addElement();
-    window.removeElement();
+    window.addElement(); // add element first
+    window.removeElement(); // remove
 
     const addedEl = document.getElementById("added-element");
     expect(addedEl).toBeNull();
