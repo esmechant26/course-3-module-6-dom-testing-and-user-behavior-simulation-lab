@@ -4,13 +4,13 @@ function addOrUpdateElement() {
   let el = document.getElementById("added-element");
 
   if (!el) {
-    // If element doesn't exist, create it
+    // First click → add element
     el = document.createElement("p");
     el.id = "added-element";
     el.textContent = "Button was clicked!";
     dynamicContent.appendChild(el);
   } else {
-    // If element exists, update text
+    // Subsequent clicks → update text
     el.textContent = "Content updated!";
   }
 }
@@ -18,9 +18,7 @@ function addOrUpdateElement() {
 // Function to remove the element
 function removeElement() {
   const el = document.getElementById("added-element");
-  if (el) {
-    el.remove();
-  }
+  if (el) el.remove();
 }
 
 // Function to handle form submission
@@ -28,7 +26,6 @@ function submitForm() {
   const input = document.getElementById("user-input");
   const dynamicContent = document.getElementById("dynamic-content");
   const errorMessage = document.getElementById("error-message");
-
   const value = input.value.trim();
 
   if (!value) {
@@ -42,18 +39,19 @@ function submitForm() {
   input.value = "";
 }
 
-// Attach event listeners after DOM is ready
+// Attach listeners after DOMContentLoaded
 document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("simulate-click")
     .addEventListener("click", addOrUpdateElement);
+
   document.getElementById("user-form").addEventListener("submit", (e) => {
     e.preventDefault();
     submitForm();
   });
 
-  // Attach functions globally for Jest / auto-grader
-  window.addElement = addOrUpdateElement; // same function
+  // Attach globally for Jest / auto-grader
+  window.addElement = addOrUpdateElement;
   window.removeElement = removeElement;
   window.submitForm = submitForm;
 });
