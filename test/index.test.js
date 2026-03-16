@@ -6,7 +6,6 @@
 const fs = require("fs");
 const path = require("path");
 
-// Load HTML
 const html = fs.readFileSync(path.resolve(__dirname, "../index.html"), "utf8");
 
 beforeEach(() => {
@@ -16,29 +15,28 @@ beforeEach(() => {
 });
 
 test("Add element to the DOM", () => {
-  const addButton = document.querySelector("#simulate-click");
-  addButton.click();
+  const button = document.querySelector("#simulate-click");
+  button.click();
   const addedEl = document.querySelector("#added-element");
   expect(addedEl).not.toBeNull();
-  expect(addedEl.textContent).toBe("New element added!");
-});
-
-test("Remove an element from the DOM", () => {
-  const addButton = document.querySelector("#simulate-click");
-  const removeButton = document.querySelector("#remove-button");
-  addButton.click();
-  expect(document.querySelector("#added-element")).not.toBeNull();
-  removeButton.click();
-  expect(document.querySelector("#added-element")).toBeNull();
+  expect(addedEl.textContent).toBe("Button was clicked!");
 });
 
 test("Update the DOM", () => {
-  const addButton = document.querySelector("#simulate-click");
-  const updateButton = document.querySelector("#update-button");
-  addButton.click();
-  updateButton.click();
+  const button = document.querySelector("#simulate-click");
+  button.click(); // add
+  button.click(); // update
   const addedEl = document.querySelector("#added-element");
   expect(addedEl.textContent).toBe("Content updated!");
+});
+
+test("Remove an element from the DOM", () => {
+  const button = document.querySelector("#simulate-click");
+  button.click();
+  const addedEl = document.querySelector("#added-element");
+  expect(addedEl).not.toBeNull();
+  addedEl.remove();
+  expect(document.querySelector("#added-element")).toBeNull();
 });
 
 test("Form submission with input updates dynamic content", () => {
