@@ -1,15 +1,25 @@
-// Step 1: Simulate User Behavior
-// - Add event listeners for button clicks and form submissions.
-// - Use JavaScript to dynamically update the DOM based on user actions.
+// index.js
+// Frontend JS - runs in browser
 
-// Step 2: DOM Manipulation Functions
-// - Implement functions to add, update, and remove DOM elements.
-// - Ensure all elements are dynamically created with appropriate attributes and content.
+const button = document.querySelector("#simulate-click");
+const form = document.querySelector("#user-form");
+const input = document.querySelector("#user-input");
+const dynamicContent = document.querySelector("#dynamic-content");
+const errorMessage = document.querySelector("#error-message");
 
-// Step 3: Error Handling
-// - Display error messages in the DOM for invalid inputs or missing elements.
-// - Create reusable functions to handle common error cases.
+// Button click handler
+button.addEventListener("click", () => {
+  dynamicContent.textContent = "Button was clicked!";
+});
 
-// Step 4: Reusable Utilities
-// - Create modular utility functions, such as createElement(tag, attributes).
-// - Ensure all functions follow DRY principles for maintainability.
+// Form submission handler
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (input.value.trim() === "") {
+    errorMessage.textContent = "Input cannot be empty";
+    errorMessage.classList.remove("hidden");
+  } else {
+    dynamicContent.textContent = `You submitted: ${input.value}`;
+    errorMessage.classList.add("hidden");
+  }
+});
